@@ -4,7 +4,7 @@ const db = require('../data/db');
 
 const router = express.Router();
 
-// GET
+// GET posts
 
 router.get('/', (req, res) => {
     db.find()
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         })
 })
 
-// GET by id
+// GET post by id
 
 router.get('/:id', (req, res) => {
     const postId = req.params.id;
@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
         })
 })
 
-// POST
+// POST (add new post)
 
 router.post('/', (req, res) => {
     const newPost = req.body;
@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
 
 })
 
-// PUT
+// PUT (edit post)
 
 router.put('/:id', (req, res) => {
     const postId = req.params.id;
@@ -74,5 +74,9 @@ router.put('/:id', (req, res) => {
             }
         })
 })
+
+// DELETE post
+
+
 
 module.exports = router;
