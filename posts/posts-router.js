@@ -77,6 +77,23 @@ router.put('/:id', (req, res) => {
 
 // DELETE post
 
+router.delete('/:id', (req, res) => {
+    const postId = req.params.id;
 
+    db.findById(postId)
+        .then(post => {
+            if (post) {
+                db.remove(postId)
+                    .then(deleted => {
+                        res.status(200).json(deleted)
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: err, message: 'The post could not be removed.' })
+                    })
+            } else {
+                res.status(404).json({ message: 'The post with the specified ID does not exist.' })
+            }
+        })
+})
 
 module.exports = router;
