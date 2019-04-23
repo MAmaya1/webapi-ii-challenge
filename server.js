@@ -4,6 +4,8 @@ const postsRouter = require('./posts/posts-router');
 
 const server = express();
 
+server.use(express.json());
+
 server.get('/', (req, res) => {
     res.send('Hi There!')
 })
