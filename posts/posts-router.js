@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     const newPost = req.body;
 
-    if (!req.body.title || !req.body.contents) {
+    if (!newPost.title || !newPost.contents) {
         res.status(400).json({ errorMessage: 'Please provide title and contents for the post.' })
     }
 
@@ -47,6 +47,32 @@ router.post('/', (req, res) => {
             res.status(500).json({ error: err, message: 'There was an error while saving the post to the database.' })
         })
 
+})
+
+// PUT
+
+router.put('/:id', (req, res) => {
+    const postId = req.params.id;
+    const updatedPost = req.body;
+
+    if (!updatedPost.title || !updatedPost.contents) {
+        res.status(400).json({ errorMessage: 'Please provide title and contents for the post.' })
+    }
+
+    db.findById(postId)
+        .then(post => {
+            if (post) {
+                db.update(postId, updatedPost)
+                .then(post => {
+                    res.status(201).json(post)
+                })
+                .catch(err => {
+                    res.status(500).json({ error: err, message: 'The post information could not be modified.' })
+                })
+            } else {
+                res.status(404).json({ message: 'The post with the specified ID does not exist.' })
+            }
+        })
 })
 
 module.exports = router;
