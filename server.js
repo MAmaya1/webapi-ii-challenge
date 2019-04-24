@@ -12,6 +12,4 @@ server.get('/', (req, res) => {
 
 server.use('/api/posts', postsRouter);
 
-server.use(express.json());
-
 module.exports = server;
