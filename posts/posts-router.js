@@ -61,14 +61,14 @@ router.put('/:id', (req, res) => {
 
     db.findById(postId)
         .then(post => {
-            if (post) {
+            if (post.length) {
                 db.update(postId, updatedPost)
-                .then(post => {
-                    res.status(201).json(post)
-                })
-                .catch(err => {
-                    res.status(500).json({ error: err, message: 'The post information could not be modified.' })
-                })
+                    .then(post => {
+                        res.status(201).json(post)
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: err, message: 'The post information could not be modified.' })
+                    })
             } else {
                 res.status(404).json({ message: 'The post with the specified ID does not exist.' })
             }
@@ -82,7 +82,7 @@ router.delete('/:id', (req, res) => {
 
     db.findById(postId)
         .then(post => {
-            if (post) {
+            if (post.length) {
                 db.remove(postId)
                     .then(deleted => {
                         res.status(200).json(deleted)
